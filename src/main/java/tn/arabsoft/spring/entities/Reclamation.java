@@ -27,8 +27,8 @@ public class Reclamation {
     private typeReclamation typeReclamation;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+  //  @JsonFormat(pattern="yyyy-MM-dd")
+  //  @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date DateOfReclam;
 
     @Enumerated(EnumType.STRING)

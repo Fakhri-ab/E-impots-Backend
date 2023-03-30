@@ -121,6 +121,10 @@ public Page<User> getAllUsers(PageRequest pr,String recherche){
 			 Page<User> alluserpage = new PageImpl<>(users.subList(start, end),pr,users.size());
 			 return alluserpage;
   }
+
+  public List<User> getallUsers2(){
+		return ur.findAll();
+  }
   public Optional<User>  getUserById(int id){
 	  return ur.findById(id);
   }

@@ -23,6 +23,9 @@ public interface ReclamationRepository extends JpaRepository<Reclamation, Intege
     @Query(value="SELECT COUNT(*) FROM Reclamation r WHERE r.Status LIKE '%Treated' ")
     Integer getNbTreatedReclamation();
 
+    @Query("SELECT r FROM Reclamation r INNER JOIN r.user u WHERE u.id =:user_id")
+    List<Reclamation> getallReclamationsByUserId(@Param("user_id") int userId);
+
     @Query("SELECT r FROM Reclamation r WHERE r.typeReclamation =:type AND r.DateOfReclam =:d ")
     List<Reclamation> FiltrerReclamationsByDateAndType(@Param("type") typeReclamation type, @Param("d") Date d);
 

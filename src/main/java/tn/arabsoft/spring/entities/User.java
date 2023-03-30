@@ -31,11 +31,11 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private  List <Reclamation> Reclamations;
 
-
-
-
 	@ManyToMany(fetch =FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Set<Role> role;
+
+	@OneToOne
+	private infoGenerale infogenerale ;
 
 
 

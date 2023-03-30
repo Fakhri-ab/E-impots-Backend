@@ -80,7 +80,11 @@ public class UserController {
 		    User u= us.getUserByEmail(email);
 		    return u;
 		    }
-		
+
+	@GetMapping({"/Alluser2"})
+	public List<User> GetAllCat(){
+		return us.getallUsers2();
+	}
 		
 		@GetMapping("/getuserById/{id}")
 		   @ResponseBody
