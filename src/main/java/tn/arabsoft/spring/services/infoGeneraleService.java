@@ -9,6 +9,7 @@ import tn.arabsoft.spring.repositories.UserRepositroy;
 import tn.arabsoft.spring.repositories.infoGeneraleRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class infoGeneraleService {
@@ -34,5 +35,33 @@ public class infoGeneraleService {
         return  l ;
     }
 
+    public infoGenerale Updateinfo(infoGenerale i  ){
+
+
+        return infogeneralerepo.save(i);
+    }
+
+    public infoGenerale updateInfoGenerale(infoGenerale info) {
+        Optional<infoGenerale> optionalInfo = infogeneralerepo.findById(info.getId());
+        infoGenerale existingInfo = null;
+        if (optionalInfo.isPresent()) {
+            existingInfo = optionalInfo.get();
+            existingInfo.setNomRaisonsociale(info.getNomRaisonsociale());
+            existingInfo.setAdresseGeographique(info.getAdresseGeographique());
+            existingInfo.setAdressePostale(info.getAdressePostale());
+            existingInfo.setEmail(info.getEmail());
+            existingInfo.setNIF(info.getNIF());
+            existingInfo.setVille(info.getVille());
+            existingInfo.setTelephone(info.getTelephone());
+            return infogeneralerepo.save(existingInfo);
+        } else {
+            // handle error here
+        }
+        return existingInfo;
+    }
+
 
 }
+
+
+

@@ -1,6 +1,7 @@
 package tn.arabsoft.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.arabsoft.spring.entities.Reclamation;
 import tn.arabsoft.spring.entities.infoGenerale;
@@ -27,5 +28,17 @@ public class infoGeneraleController {
     @GetMapping("/getallinfoGeneraleByUserId/{idUser}")
     public List<infoGenerale> getallinfoGeneraleByUserId(@PathVariable("idUser") int idUser) {
         return infogeneraleservice.getallinfoGeneraleByUserId(idUser);
+    }
+
+    @PutMapping("/modify-info/{id}")
+    @ResponseBody
+    public infoGenerale UpdateCategorie(@RequestBody infoGenerale i, @PathVariable("id") Integer infoId) {
+        return infogeneraleservice.Updateinfo(i);
+    }
+
+    @PutMapping("modifyinfogenerale/{id}")
+    public ResponseEntity<infoGenerale> updateInfoGenerale(@PathVariable int id, @RequestBody infoGenerale info) {
+        infoGenerale updatedInfo = infogeneraleservice.updateInfoGenerale( info);
+        return ResponseEntity.ok(updatedInfo);
     }
 }
