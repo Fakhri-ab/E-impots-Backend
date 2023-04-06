@@ -18,6 +18,10 @@ public class demandeInscriptionService {
 
     @Autowired
     demandeInscriptionRepo demandeInscriptionRepo ;
+
+    @Autowired
+    private EmailSenderService servicemail;
+
     public Page<demandeInscription> getallDemandes(PageRequest pr, String recherche){
         if (recherche.equals(""))
             return (Page<demandeInscription>) demandeInscriptionRepo.findAll(pr);
@@ -42,6 +46,13 @@ public class demandeInscriptionService {
         demandeInscription demandeinsc ;
         demande.setStatus(StatusDemandeInscription.Nouveau);
         demandeinsc = demandeInscriptionRepo.save(demande) ;
+        servicemail.sendSimpleEmail(demandeinsc.getEmail(),"Bonjour,\n" + demandeinsc.getUserLName() + " "+ demandeinsc.getUserFName() +
+                "\n" +
+                "Nous vous remercions pour votre demande d'inscription à notre service. Nous avons bien reçu votre demande et nous mettons tout en œuvre pour la traiter dans les meilleurs délais. Notre équipe est mobilisée pour répondre à votre demande et vous accompagner tout au long du processus d'inscription.\n" +
+                "\n" +
+                "Nous restons à votre disposition pour toute information complémentaire et nous vous tiendrons informé(e) de l'avancement de votre demande.\n" +
+                "\n" +
+                "Cordialement","E-impots Demande d'inscription");
        return demandeinsc ;
     }
 

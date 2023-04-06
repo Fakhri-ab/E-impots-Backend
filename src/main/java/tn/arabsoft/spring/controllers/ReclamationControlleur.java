@@ -9,6 +9,7 @@ import tn.arabsoft.spring.entities.StatusReclamation;
 import tn.arabsoft.spring.entities.User;
 import tn.arabsoft.spring.services.ReclamationService;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -42,7 +43,7 @@ public class ReclamationControlleur {
         return reclamationService.retrieveReclamationById(ReclamationId);
     }
     @PostMapping("/add-Reclamation/{idUser}")
-    public Reclamation addReclamation(@RequestBody Reclamation r , @PathVariable("idUser") int idUser ){
+    public Reclamation addReclamation(@RequestBody Reclamation r , @PathVariable("idUser") int idUser ) throws MessagingException, IOException {
         Reclamation Reclamation = reclamationService.addReclamation(r,idUser);
         return Reclamation;
 
@@ -60,7 +61,7 @@ public class ReclamationControlleur {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        reclamationService.export(response);
+     //   reclamationService.export(response);
     }
     @PutMapping("/modify-Reclamation/{idUser}/{idr}")
     public Reclamation modifyReclamation(@RequestBody Reclamation Reclamation , @PathVariable("idUser") int idUser, @PathVariable("idr") int idr ){

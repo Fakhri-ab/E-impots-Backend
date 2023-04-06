@@ -20,6 +20,7 @@ import tn.arabsoft.spring.entities.User;
 import tn.arabsoft.spring.repositories.ReclamationRepository;
 import tn.arabsoft.spring.repositories.UserRepositroy;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class ReclamationService {
 
     @Autowired
     UserRepositroy userRepositroy ;
+
+    @Autowired
+    private EmailSenderService servicemail;
 
     public  List<Reclamation> retrieveAllReclamations() {
         List<Reclamation> listReclamations = reclamationRepository.findAll();
@@ -64,7 +68,7 @@ public class ReclamationService {
     }
 
 
-    public Reclamation addReclamation(Reclamation r, int idUser ) {
+    public Reclamation addReclamation(Reclamation r, int idUser ) throws IOException, MessagingException {
         Reclamation re ;
         User u = userRepositroy.findById(idUser).orElse(null);
     //  Produit p =IproduitRepository.findById(idProduit).orElse(null);
@@ -73,6 +77,7 @@ public class ReclamationService {
         r.setStatus(StatusReclamation.New);
         r.setDateOfReclam(new Date());
         re= reclamationRepository.save(r);
+      //  servicemail.sendEmailWithAttachment(u.getEmail(),"bonjour Monsieur","E-impots reclamation service",export());
         log.info("Reclamation ajouter " +re);
         return re ;
 
@@ -144,17 +149,8 @@ public class ReclamationService {
     }
 
 
-    public static byte[] generatePdf() throws Exception {
-        Document document = new Document();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, out);
-        document.open();
-        document.add(new Paragraph("Hello World!"));
-        document.close();
-        return out.toByteArray();
-    }
 
-    public void export(HttpServletResponse response  ) throws IOException {
+    public void export1(HttpServletResponse response  ) throws IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -170,7 +166,15 @@ public class ReclamationService {
         Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
         fontParagraph.setSize(12);
 
-        Paragraph paragraph2 = new Paragraph("Nous avons bien reçu votre reclamation Madame, ou Monsieur  " + " on va régler le problème le plus tot possible", fontParagraph);
+        Paragraph paragraph2 = new Paragraph("Cher client,  " + " Cher client," +
+                "Nous avons bien reçu votre réclamation " +
+                "Soyez assuré que nous prenons très au sérieux vos commentaires" +
+                "Nous avons d'ores et déjà transmis votre réclamation à notre équipe compétente " +
+                "et nous allons tout mettre en œuvre pour régler cette situation au plus vite " +
+                "Nous vous remercions de votre patience et de votre compréhension et " +
+                " nous nous engageons à vous tenir informé de l'évolution de la situation. " +
+                " S'il vous plaît, n'hésitez pas à nous contacter si vous avez des questions supplémentaires " +
+                "Cordialement", fontParagraph);
         paragraph2.setAlignment(Paragraph.ALIGN_LEFT);
 
        // Date d = new Date() ;
@@ -192,5 +196,51 @@ public class ReclamationService {
         document.addCreationDate() ;
        // document.add(image2);
         document.close();
+    }
+
+    public ByteArrayOutputStream export() throws DocumentException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Document document = new Document();
+        PdfWriter.getInstance(document, baos);
+        document.open();
+        // Ajoutez ici le contenu du PDF
+        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        fontTitle.setSize(18);
+
+        Paragraph paragraph = new Paragraph("****Service De Reclamation****", fontTitle);
+        paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+        paragraph.setSpacingAfter(10);
+
+
+        Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
+        fontParagraph.setSize(12);
+
+        Paragraph paragraph2 = new Paragraph("Cher client,  " + " Cher client," +
+                "Nous avons bien reçu votre réclamation " +
+                "Soyez assuré que nous prenons très au sérieux vos commentaires" +
+                "Nous avons d'ores et déjà transmis votre réclamation à notre équipe compétente " +
+                "et nous allons tout mettre en œuvre pour régler cette situation au plus vite " +
+                "Nous vous remercions de votre patience et de votre compréhension et " +
+                " nous nous engageons à vous tenir informé de l'évolution de la situation. " +
+                " S'il vous plaît, n'hésitez pas à nous contacter si vous avez des questions supplémentaires " +
+                "Cordialement", fontParagraph);
+        paragraph2.setAlignment(Paragraph.ALIGN_LEFT);
+
+        // Date d = new Date() ;
+        ;
+        // String filename1 = "./src/main/resources/woman.png";
+        // Image image2 = Image.getInstance(filename1);
+        // image2.setAlignment(Image.RIGHT);
+        //  image2.scaleToFit(100, 100);
+
+
+
+
+        document.add(paragraph);
+        document.add(paragraph2);
+        document.addCreationDate() ;
+
+        document.close();
+        return baos;
     }
 }

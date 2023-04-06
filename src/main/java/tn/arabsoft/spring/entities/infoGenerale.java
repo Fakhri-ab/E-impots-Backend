@@ -22,6 +22,8 @@ public class infoGenerale {
     private String ville ;
     private Long Telephone ;
     private String Email ;
+    @Enumerated(EnumType.STRING)
+    private Activites activites ;
     @OneToOne
     private User user ;
 

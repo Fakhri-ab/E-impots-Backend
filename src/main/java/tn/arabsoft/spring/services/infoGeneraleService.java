@@ -53,6 +53,7 @@ public class infoGeneraleService {
             existingInfo.setNIF(info.getNIF());
             existingInfo.setVille(info.getVille());
             existingInfo.setTelephone(info.getTelephone());
+            existingInfo.setActivites(info.getActivites());
             return infogeneralerepo.save(existingInfo);
         } else {
             // handle error here
