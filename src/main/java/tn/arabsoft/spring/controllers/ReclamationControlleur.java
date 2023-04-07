@@ -3,10 +3,10 @@ package tn.arabsoft.spring.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.arabsoft.spring.entities.Reclamation;
 import tn.arabsoft.spring.entities.StatusReclamation;
-import tn.arabsoft.spring.entities.User;
 import tn.arabsoft.spring.services.ReclamationService;
 
 import javax.mail.MessagingException;
@@ -63,9 +63,10 @@ public class ReclamationControlleur {
 
      //   reclamationService.export(response);
     }
-    @PutMapping("/modify-Reclamation/{idUser}/{idr}")
-    public Reclamation modifyReclamation(@RequestBody Reclamation Reclamation , @PathVariable("idUser") int idUser, @PathVariable("idr") int idr ){
-        return reclamationService.updateReclamation(Reclamation,idUser,idr);
+    @PutMapping("/modify-Reclamation/{idr}")
+    public ResponseEntity<Reclamation>  modifyReclamation(@RequestBody Reclamation reclamation , @PathVariable("idr") int idUser ){
+        Reclamation updatedReclamation = reclamationService.updateReclamation(reclamation) ;
+        return ResponseEntity.ok(updatedReclamation);
     }
 
     @DeleteMapping("/remove-Reclamation/{id}")

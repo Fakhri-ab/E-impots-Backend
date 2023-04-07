@@ -1,5 +1,5 @@
 package tn.arabsoft.spring.entities;
 
 public enum StatusReclamation {
-    New, Pending, Treated
+    Nouvelle, En_attente , Traité
 }

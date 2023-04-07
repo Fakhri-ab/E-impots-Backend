@@ -1,10 +1,6 @@
 package tn.arabsoft.spring.services;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.common.BitMatrix;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
@@ -24,11 +20,11 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -74,7 +70,7 @@ public class ReclamationService {
     //  Produit p =IproduitRepository.findById(idProduit).orElse(null);
         r.setUser(u);
    //   r.setProduitReclamation(p);
-        r.setStatus(StatusReclamation.New);
+        r.setStatus(StatusReclamation.Nouvelle);
         r.setDateOfReclam(new Date());
         re= reclamationRepository.save(r);
       //  servicemail.sendEmailWithAttachment(u.getEmail(),"bonjour Monsieur","E-impots reclamation service",export());
@@ -94,22 +90,20 @@ public class ReclamationService {
         return reclamation;
     }
 
-    public Reclamation updateReclamation(Reclamation r , int idUser , int idr ) {
-        Reclamation re ;
-      //  User u = userRepositroy.findById(idUser).orElse(null);
-      //  Produit p =IproduitRepository.findById(idProduit).orElse(null);
-     //   r.setUser(u);
-     //  r.setProduitReclamation(p);
-     //   r.setDateOfReclam(new Date());
-      //  r.setStatus(StatusReclamation.Treated);
-       // StatusReclamation d =r.getStatus();
-/*
-        if(r.getStatus().equals(StatusReclamation.Treated)){
-            NotifyUserBySMS(r) ;
-        } */
-        re= reclamationRepository.save(r);
-        log.info("Reclamation Modifier " +re);
-        return re ;
+    public Reclamation updateReclamation(Reclamation r ) {
+        Optional<Reclamation> optionalInfo = reclamationRepository.findById(r.getIdReclamation());
+        Reclamation existingReclamation = null;
+        if (optionalInfo.isPresent()) {
+            existingReclamation = optionalInfo.get();
+            existingReclamation.setDescription(r.getDescription());
+            existingReclamation.setTypeReclamation(r.getTypeReclamation());
+            existingReclamation.setDateOfReclam(r.getDateOfReclam());
+            existingReclamation.setStatus(r.getStatus());
+            return reclamationRepository.save(existingReclamation);
+        } else {
+            // handle error here
+        }
+        return existingReclamation;
     }
 
     public int getTotalReclamation() {
