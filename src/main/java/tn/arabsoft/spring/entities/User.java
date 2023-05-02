@@ -31,6 +31,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private  List <Reclamation> Reclamations;
 
+	@OneToMany(mappedBy = "user")
+	private  List <DeclarationIRPP> DeclarationIRPP;
+
 	@ManyToMany(fetch =FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Set<Role> role;
 
