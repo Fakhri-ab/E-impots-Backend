@@ -38,8 +38,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure (HttpSecurity httpSecurity) throws Exception{
 		httpSecurity.cors();
 		httpSecurity.csrf().disable()
-		.authorizeRequests().antMatchers("/auth","/register","/verify","/forgetpassword","/getUserByEmail","/resetpassword/{token}/{Password}","/downloadPdf","/ajouterDemande").permitAll()
+		.authorizeRequests()
+		.antMatchers("/auth","/register","/verify","/forgetpassword","/getUserByEmail","/resetpassword/{token}/{Password}","/downloadPdf","/ajouterDemande","payment").permitAll()
 		.antMatchers(HttpHeaders.ALLOW).permitAll()
+		//.antMatchers("/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.exceptionHandling().authenticationEntryPoint(jwtep)

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api")
+//@RequestMapping(value = "/api")
 public class StripeController {
 
     private static Gson gson = new Gson();
@@ -87,7 +87,7 @@ public class StripeController {
 
 
     private static void init() {
-        Stripe.apiKey = "pk_test_51N3iERK2dt7NKQz9m6dAVUcHwSCoJPcaVznXOOSaQ2tyIGVZ7K3kOPQpvqVP4khZ6jCRRtPfX7La5TpshhdnIsdn007SCiN81b";
+        Stripe.apiKey = "sk_test_51N3iERK2dt7NKQz9Q62YVjfWq1LJ0UeNfW5lZ94rqYafl9w2NQ0E0A5XhO0t5S1baeu2WKHurYne0dCtsYRWW6eA00mHNw0Ihf";
     }
 
 
