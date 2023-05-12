@@ -5,8 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import tn.arabsoft.spring.entities.DeclarationIRPP;
-import tn.arabsoft.spring.entities.Reclamation;
-import tn.arabsoft.spring.entities.infoGenerale;
 import tn.arabsoft.spring.services.DeclarationIRPPService;
 
 import java.util.List;
@@ -38,5 +36,11 @@ public class declarationIRPPController {
     @GetMapping("/getallDeclarationIRPPbyUserid/{idUser}")
     public List<DeclarationIRPP>  getalldeclarationIRPPbyUserid(@PathVariable("idUser") int idUser) {
         return declarationIRPPService.getallDeclarationIRPPByUserId(idUser);
+    }
+
+    @DeleteMapping("/deleteDeclarationIRPP/{id}")
+    @ResponseBody
+    public void deleteDeclarationIRPP(@PathVariable("id") Integer DeclarationIRPPId){
+        declarationIRPPService.deleteDeclarationIRPP(DeclarationIRPPId);
     }
 }

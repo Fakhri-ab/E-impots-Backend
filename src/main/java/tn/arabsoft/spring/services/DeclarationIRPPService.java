@@ -42,7 +42,7 @@ public class DeclarationIRPPService {
     }
 
     public DeclarationIRPP addDeclarationIRPP(DeclarationIRPP Di, int idUser){
-        System.out.println(Di);
+      //  System.out.println(Di);
         User u = userRepositroy.findById(idUser).orElse(null);
          Di.setUser(u);
         return declarationIRPPRepo.save(Di) ;
@@ -51,4 +51,6 @@ public class DeclarationIRPPService {
     public DeclarationIRPP getDeclarationIRPPById(int id){
         return declarationIRPPRepo.findById(id).orElse(null) ;
     }
+
+    public void deleteDeclarationIRPP(int id){ declarationIRPPRepo.deleteById(id);}
 }

@@ -33,6 +33,8 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	private  List <DeclarationIRPP> DeclarationIRPP;
+	@OneToMany(mappedBy = "user")
+	private  List <DeclarationTVA> declarationTVA;
 
 	@ManyToMany(fetch =FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Set<Role> role;
