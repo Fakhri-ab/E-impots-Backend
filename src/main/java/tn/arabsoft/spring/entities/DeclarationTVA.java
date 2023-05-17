@@ -1,6 +1,7 @@
 package tn.arabsoft.spring.entities;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class DeclarationTVA {
     private float TVACollectee   ;
     private float TVADeductible    ;
     private float TVANetteAPaye    ;
+    @Temporal(TemporalType.DATE)
+    //@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date DateOfDeclarationTVA;
 
     private String fullName ;
