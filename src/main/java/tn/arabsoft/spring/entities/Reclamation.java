@@ -21,6 +21,7 @@ public class Reclamation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReclamation;
 
+    @Column(length = 5000)
     private  String  description;
 
     @Enumerated(EnumType.STRING)

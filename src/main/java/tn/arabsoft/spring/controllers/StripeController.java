@@ -4,10 +4,18 @@ import com.google.gson.Gson;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.param.checkout.SessionCreateParams;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.arabsoft.spring.entities.Checkout;
 import tn.arabsoft.spring.entities.CheckoutPayment;
 import com.stripe.model.checkout.Session;
+import tn.arabsoft.spring.entities.DeclarationIRPP;
+import tn.arabsoft.spring.entities.DeclarationTVA;
+import tn.arabsoft.spring.repositories.DeclarationIRPPRepo;
+import tn.arabsoft.spring.repositories.DeclarationTVARepo;
+import tn.arabsoft.spring.services.DeclarationIRPPService;
+import tn.arabsoft.spring.services.DeclarationTVAService;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +23,16 @@ import java.util.Map;
 @CrossOrigin
 //@RequestMapping(value = "/api")
 public class StripeController {
+
+    @Autowired
+    DeclarationIRPPService declarationIRPPService ;
+    @Autowired
+    DeclarationIRPPRepo declarationIRPPRepo ;
+
+    @Autowired
+    DeclarationTVAService declarationTVAService ;
+    @Autowired
+    DeclarationTVARepo declarationTVARepo ;
 
     private static Gson gson = new Gson();
     @PostMapping("/payment")
@@ -28,6 +46,7 @@ public class StripeController {
     public String paymentWithCheckoutPage(@RequestBody CheckoutPayment payment) throws StripeException {
         // We initilize stripe object with the api key
         init();
+        System.out.println();
         // We create a stripe session
         SessionCreateParams params = SessionCreateParams.builder()
                 // We will use the credit card payment method
@@ -46,6 +65,21 @@ public class StripeController {
                                 .build())
                 .build();
 System.out.println(params);
+
+
+        System.out.println("wael haw payment" +payment );
+        if(payment.getTypedec().equals("IRPP")){
+            DeclarationIRPP declarationIRPP = declarationIRPPService.getDeclarationIRPPById(payment.getDecId()) ;
+            declarationIRPP.setSituationFiscale("payee");
+            declarationIRPPRepo.save(declarationIRPP) ;
+        }
+        else if (payment.getTypedec().equals("TVA")) {
+            DeclarationTVA declarationTVA = declarationTVAService.getDeclarationTVAById(payment.getDecId()) ;
+            declarationTVA.setSituationFiscale("payee");
+            declarationTVARepo.save(declarationTVA) ;
+        }
+
+
         Session session = Session.create(params);
 
         Map<String, String> responseData = new HashMap<>();
@@ -85,7 +119,7 @@ System.out.println(params);
 
 
     private static void init() {
-        Stripe.apiKey = "sk_test_51N3iERK2dt7NKQz9Q62YVjfWq1LJ0UeNfW5lZ94rqYafl9w2NQ0E0A5XhO0t5S1baeu2WKHurYne0dCtsYRWW6eA00mHNw0Ihf";
+        Stripe.apiKey = "sk_test_51N8vbeD7kz8pNZUfgUdECsRytn9qGsUqMVMD0MqIxQekJkLV5oe1yiBhEcjNBarw1FwYxqK0GcyCzOovvtNbAYjc00OUIbXwGL";
     }
 
 

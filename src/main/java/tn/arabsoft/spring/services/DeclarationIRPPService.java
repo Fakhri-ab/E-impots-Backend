@@ -45,6 +45,7 @@ public class DeclarationIRPPService {
       //  System.out.println(Di);
         User u = userRepositroy.findById(idUser).orElse(null);
          Di.setUser(u);
+         Di.setSituationFiscale("Non payee");
         return declarationIRPPRepo.save(Di) ;
     }
 

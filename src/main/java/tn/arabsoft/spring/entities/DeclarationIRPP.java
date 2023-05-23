@@ -23,7 +23,7 @@ public class DeclarationIRPP {
     private float BeneficesNnonCommerciaux ;
     private float PCVMI ;
     private String fullName ;
-
+    private String SituationFiscale ;
     private float Montanpayer ;
     @Temporal(TemporalType.DATE)
     //  @JsonFormat(pattern="yyyy-MM-dd")

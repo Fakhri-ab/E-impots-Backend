@@ -25,6 +25,7 @@ public class DeclarationTVA {
     private float TVACollectee   ;
     private float TVADeductible    ;
     private float TVANetteAPaye    ;
+    private String SituationFiscale ;
     @Temporal(TemporalType.DATE)
     //@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date DateOfDeclarationTVA;

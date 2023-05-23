@@ -49,6 +49,7 @@ public class DeclarationTVAService {
         //  System.out.println(Di);
         User u = userRepositroy.findById(idUser).orElse(null);
         Dt.setUser(u);
+        Dt.setSituationFiscale("Non payee");
         return declarationTVARepo.save(Dt) ;
     }
 

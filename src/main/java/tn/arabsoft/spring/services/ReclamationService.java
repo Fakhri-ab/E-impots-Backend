@@ -50,7 +50,7 @@ public class ReclamationService {
           return (Page<Reclamation>) reclamationRepository.findAll(pr);
 
       List<Reclamation> reclamations= reclamationRepository.findAll().stream()
-              .filter(reclamation ->  reclamation.getStatus().name().equals(recherche) || reclamation.getDescription().contains(recherche))
+              .filter(reclamation ->  reclamation.getUser().getUserName().contains(recherche) || reclamation.getDescription().contains(recherche))
               .collect(Collectors.toList());
 
       System.out.println("reclamations" +reclamations );

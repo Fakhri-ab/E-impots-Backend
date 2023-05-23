@@ -7,6 +7,8 @@ public class CheckoutPayment {
     private String cancelUrl;
     private long amount;
     private long quantity;
+    private int decId ;
+    private String typedec ;
 
     public String getName() {
         return name;
@@ -56,4 +58,32 @@ public class CheckoutPayment {
         this.quantity = quantity;
     }
 
+    public int getDecId() {
+        return decId;
+    }
+
+    public void setDecId(int decId) {
+        this.decId = decId;
+    }
+
+    public String getTypedec() {
+        return typedec;
+    }
+
+    public void setTypedec(String typedec) {
+        this.typedec = typedec;
+    }
+
+    @Override
+    public String toString() {
+        return "CheckoutPayment{" +
+                "name='" + name + '\'' +
+                ", currency='" + currency + '\'' +
+                ", successUrl='" + successUrl + '\'' +
+                ", cancelUrl='" + cancelUrl + '\'' +
+                ", amount=" + amount +
+                ", quantity=" + quantity +
+                ", decId=" +decId  +
+                '}';
+    }
 }
