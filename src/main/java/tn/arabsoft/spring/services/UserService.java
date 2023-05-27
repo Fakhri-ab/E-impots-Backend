@@ -184,7 +184,7 @@ public Page<User> getAllUsers(PageRequest pr,String recherche){
 		 simpleUser.setUserFName("fakhri");
 		 simpleUser.setUserLName("abessi");
 		 simpleUser.setUserName("fakhriAbessi");
-		 simpleUser.setEmail("abessi.fakhreddine21@gmail.com");
+		 simpleUser.setEmail("abessi.fakhri@gmail.com");
 		 simpleUser.setPassword(getEncodedPassword("fakhri123"));
 		 simpleUser.setEnabled(true);
 		 Set<Role> UsersRoles = new HashSet<>();

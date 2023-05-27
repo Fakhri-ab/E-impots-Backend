@@ -36,6 +36,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private  List <DeclarationTVA> declarationTVA;
 
+	@OneToMany(mappedBy = "user")
+	private  List <DeclarationTF> declarationTF;
+
 	@ManyToMany(fetch =FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Set<Role> role;
 
