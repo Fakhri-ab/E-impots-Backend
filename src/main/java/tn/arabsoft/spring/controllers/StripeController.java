@@ -6,14 +6,13 @@ import com.stripe.exception.StripeException;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.arabsoft.spring.entities.Checkout;
-import tn.arabsoft.spring.entities.CheckoutPayment;
+import tn.arabsoft.spring.entities.*;
 import com.stripe.model.checkout.Session;
-import tn.arabsoft.spring.entities.DeclarationIRPP;
-import tn.arabsoft.spring.entities.DeclarationTVA;
 import tn.arabsoft.spring.repositories.DeclarationIRPPRepo;
+import tn.arabsoft.spring.repositories.DeclarationTFRepo;
 import tn.arabsoft.spring.repositories.DeclarationTVARepo;
 import tn.arabsoft.spring.services.DeclarationIRPPService;
+import tn.arabsoft.spring.services.DeclarationTFService;
 import tn.arabsoft.spring.services.DeclarationTVAService;
 
 import java.util.HashMap;
@@ -33,6 +32,10 @@ public class StripeController {
     DeclarationTVAService declarationTVAService ;
     @Autowired
     DeclarationTVARepo declarationTVARepo ;
+    @Autowired
+    DeclarationTFService declarationTFService ;
+    @Autowired
+    DeclarationTFRepo declarationTFRepo ;
 
     private static Gson gson = new Gson();
     @PostMapping("/payment")
@@ -77,6 +80,11 @@ System.out.println(params);
             DeclarationTVA declarationTVA = declarationTVAService.getDeclarationTVAById(payment.getDecId()) ;
             declarationTVA.setSituationFiscale("payee");
             declarationTVARepo.save(declarationTVA) ;
+        }
+        else if (payment.getTypedec().equals("TF")) {
+            DeclarationTF declarationTF = declarationTFService.getDeclarationTFById(payment.getDecId()) ;
+            declarationTF.setSituationFiscale("payee");
+            declarationTFRepo.save(declarationTF) ;
         }
 
 

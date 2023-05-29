@@ -20,7 +20,7 @@ public class DeclarationTF {
     private String TypeBien ;
     private float SuperficieBien ;
     private float Valeurlocative ;
-    private float MontantTaxeFoncière ;
+    private float MontantTaxeFonciere ;
     private String SituationFiscale ;
     @Temporal(TemporalType.DATE)
     //@DateTimeFormat(pattern="yyyy-MM-dd")
